@@ -1,0 +1,8 @@
+start:
+  configSchema:
+    type: object
+    properties: {}
+  command:
+    - python
+    - "-m"
+    - excel_toolkit_mcp.server

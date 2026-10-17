@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "excel-toolkit-mcp"
+version = "0.1.0"
+description = "Excel formula generation + CSV/XLSX cleaning MCP server, local-only."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "diyaluo" }]
+dependencies = [
+  "mcp>=1.0",
+  "openpyxl>=3.1",
+]
+
+[project.scripts]
+excel_toolkit_mcp = "excel_toolkit_mcp.server:main"
+
+[project.urls]
+Homepage = "https://github.com/diyaluo/excel-toolkit-mcp"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/excel_toolkit_mcp"]
