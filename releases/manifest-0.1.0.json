@@ -1,0 +1,43 @@
+{
+  "manifest_version": "0.4",
+  "name": "excel-toolkit-mcp",
+  "display_name": "Excel Toolkit MCP",
+  "version": "0.1.0",
+  "description": "Generate Excel formulas and clean/normalize CSV/XLSX tables, fully local.",
+  "long_description": "Excel formula generation (Chinese/English function names, range-safe) plus CSV/XLSX cleaning: split/merge columns, trim, dedupe, type normalize. Local-only, stdlib + openpyxl.",
+  "author": {
+    "name": "diyaluo"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diyaluo/excel-toolkit-mcp"
+  },
+  "homepage": "https://github.com/diyaluo/excel-toolkit-mcp",
+  "license": "MIT",
+  "keywords": [
+    "excel",
+    "xlsx",
+    "formula",
+    "data-cleaning",
+    "spreadsheet",
+    "local-first"
+  ],
+  "server": {
+    "type": "python",
+    "entry_point": "server/server.py",
+    "mcp_config": {
+      "command": "python",
+      "args": [
+        "${__dirname}/server/server.py"
+      ],
+      "env": {}
+    }
+  },
+  "compatibility": {
+    "platforms": [
+      "darwin",
+      "linux",
+      "win32"
+    ]
+  }
+}
