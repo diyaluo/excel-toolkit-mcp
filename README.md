@@ -1,5 +1,8 @@
 # excel-toolkit MCP
 
+> 📄 **Project landing page (use cases and install guide): https://diyaluo.github.io/excel-toolkit-mcp/**
+
+
 纯本地 Excel/CSV 工具的 MCP 封装（无 API Key、无 LLM、不联网）。核心引擎来自
 `data/disk/projects/excel-toolkit`（确定性公式模板 + 表格清洗）。
 

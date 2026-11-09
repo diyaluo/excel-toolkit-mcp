@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>excel-toolkit-mcp — Local Excel Formula Generation and Table Cleaning MCP Server</title>
+  <meta name="description" content="Open-source Model Context Protocol server that turns a plain-language request into a ready-to-paste Excel or Google Sheets formula (30+ intents) and cleans CSV/XLSX tables by JSON spec. Fully local, no LLM, no API key, no network.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://diyaluo.github.io/excel-toolkit-mcp/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="excel-toolkit-mcp — Excel Formula &amp; Table Cleaning MCP Server">
+  <meta property="og:description" content="Let any MCP AI agent generate spreadsheet formulas from plain language and clean CSV/XLSX files by spec, all locally with no LLM or upload.">
+  <meta property="og:url" content="https://diyaluo.github.io/excel-toolkit-mcp/">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "excel-toolkit-mcp",
+      "url": "https://diyaluo.github.io/excel-toolkit-mcp/",
+      "downloadUrl": "https://github.com/diyaluo/excel-toolkit-mcp",
+      "softwareHelp": "https://github.com/diyaluo/excel-toolkit-mcp",
+      "description": "Open-source Model Context Protocol server that turns a plain-language request into a ready-to-paste Excel or Google Sheets formula (30+ intents) and cleans CSV/XLSX tables by JSON spec. Fully local, no LLM, no API key, no network.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "license": "https://github.com/diyaluo/excel-toolkit-mcp/blob/master/LICENSE",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "MCP server for Excel/Google Sheets formula generation",
+        "30+ deterministic formula intents, null on unknown intent",
+        "Declarative JSON-spec CSV/XLSX table cleaning",
+        "Header normalization, dedup, type coercion, split and filter operations",
+        "No LLM, no API key, no network — fully deterministic",
+        "Runs locally, files never uploaded",
+        "Works with Claude Desktop, Cursor and any MCP client"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Open Source MCP Tools",
+          "item": "https://diyaluo.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "excel-toolkit-mcp",
+          "item": "https://diyaluo.github.io/excel-toolkit-mcp/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does this MCP server do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It gives an MCP-compatible AI agent two deterministic spreadsheet tools: generate_formula converts a plain-language request into a paste-ready Excel/Google Sheets formula, and clean_table transforms a CSV/XLSX file according to a JSON specification."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it call an LLM to write formulas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Formula generation uses a local deterministic template engine covering 30+ intents. If an intent is not supported it returns formula:null instead of hallucinating, and there is no token cost or network dependency."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What cleaning operations are supported?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The clean_table spec supports header normalization, dropping empty columns and duplicates, whitespace stripping, number and date column coercion, splitting and selecting columns, fillna, filtering and subset deduplication."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it upload my files?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The server runs locally over stdio with no network access, so confidential spreadsheets remain on the machine."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which MCP clients are supported?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Any Model Context Protocol client over stdio, including Claude Desktop and Cursor. It is published to the official MCP Registry as io.github.diyaluo/excel-toolkit-mcp and on GHCR."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <style>
+    :root { --ink:#0f172a; --muted:#475569; --line:#e2e8f0; --accent:#2563eb; --bg:#f8fafc; --card:#fff; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif; color:var(--ink); background:var(--bg); line-height:1.65; }
+    .wrap { max-width:880px; margin:0 auto; padding:0 24px; }
+    header.hero { background:linear-gradient(135deg,#0f172a,#1e3a8a); color:#fff; padding:72px 0 64px; }
+    .badge { display:inline-block; font-size:.8rem; font-weight:600; letter-spacing:.04em; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); padding:5px 12px; border-radius:999px; margin-bottom:20px; }
+    h1 { font-size:2.3rem; line-height:1.2; margin:0 0 16px; }
+    .lead { font-size:1.15rem; color:#cbd5e1; max-width:680px; margin:0 0 28px; }
+    .cta-row { display:flex; gap:14px; flex-wrap:wrap; }
+    .btn { display:inline-block; padding:12px 22px; border-radius:10px; font-weight:600; text-decoration:none; font-size:.95rem; }
+    .btn-primary { background:var(--accent); color:#fff; }
+    .btn-primary:hover { filter:brightness(1.08); }
+    .btn-ghost { background:transparent; color:#fff; border:1px solid rgba(255,255,255,.4); }
+    main { padding:56px 0 24px; }
+    section { margin-bottom:48px; }
+    h2 { font-size:1.5rem; margin:0 0 18px; }
+    h3 { font-size:1.1rem; margin:24px 0 8px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px; }
+    .card h3 { margin-top:0; }
+    .card p { color:var(--muted); font-size:.95rem; margin:6px 0 0; }
+    pre { background:#0f172a; color:#e2e8f0; padding:18px; border-radius:12px; overflow-x:auto; font-size:.88rem; line-height:1.55; }
+    code { font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace; }
+    p code, li code { background:#eef2ff; color:#3730a3; padding:2px 6px; border-radius:6px; font-size:.88em; }
+    ul.clean { list-style:none; padding:0; margin:0; }
+    ul.clean li { padding:8px 0 8px 28px; position:relative; border-bottom:1px solid var(--line); }
+    ul.clean li:last-child { border-bottom:0; }
+    ul.clean li::before { content:"\2713"; position:absolute; left:0; color:#16a34a; font-weight:700; }
+    .faq details { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 20px; margin-bottom:12px; }
+    .faq summary { font-weight:600; cursor:pointer; }
+    .faq p { color:var(--muted); margin:10px 0 0; font-size:.95rem; }
+    .meta { color:var(--muted); font-size:.9rem; }
+    a { color:var(--accent); }
+    footer { border-top:1px solid var(--line); padding:32px 0 48px; color:var(--muted); font-size:.9rem; }
+</style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <span class="badge">Open Source &middot; Model Context Protocol &middot; MIT</span>
+      <h1>Let an AI agent write spreadsheet formulas and clean tables deterministically, on your machine</h1>
+      <p class="lead">excel-toolkit-mcp is a local MCP server with two deterministic engines: plain-language to Excel/Google Sheets formulas across 30+ intents, and JSON-spec-driven CSV/XLSX cleaning. No LLM, no API key, no network.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://github.com/diyaluo/excel-toolkit-mcp">View on GitHub</a>
+        <a class="btn btn-ghost" href="#install">Install guide</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section>
+      <h2>Why an MCP server for this</h2>
+      <p class="meta">LLMs happily invent spreadsheet functions or return formulas that break on locale differences. This server replaces guesswork with a deterministic template engine for formulas and a declarative cleaning pipeline for tables, so the agent gets correct, paste-ready output while sensitive files stay local.</p>
+      <div class="grid" style="margin-top:20px">
+<div class="card"><h3>Formula assistance</h3><p>Describe a calculation in plain language and get a correct, paste-ready Excel or Google Sheets formula instead of an LLM guess.</p></div>
+<div class="card"><h3>Data cleaning pipelines</h3><p>Apply a repeatable JSON spec — normalize headers, drop duplicates, fix types — across many files without manual clicking.</p></div>
+<div class="card"><h3>Finance and operations</h3><p>Clean ledger or operational exports and generate formulas without sending confidential spreadsheets to an online service.</p></div>
+<div class="card"><h3>AI agents and automation</h3><p>Give Claude Desktop or Cursor callable, deterministic spreadsheet tools that return null on an unknown intent rather than hallucinating.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>What it does</h2>
+      <ul class="clean">
+<li><strong>generate_formula(text)</strong> — one plain-language sentence to a paste-ready Excel/Google Sheets formula across 30+ intents; returns <code>formula: null</code> when the intent is not recognized rather than guessing.</li>
+<li><strong>list_formula_intents()</strong> — enumerate every supported formula intent.</li>
+<li><strong>clean_table(input, spec, output, as_csv)</strong> — clean a CSV/XLSX by a declarative JSON spec and write the result to disk.</li>
+<li>Cleaning spec supports normalize_headers, drop_empty_cols, drop_duplicates, strip_whitespace, number_columns, date_columns, split_columns, select_columns, fillna, filter and dedup_subset.</li>
+<li>Deterministic template engine — <strong>no LLM and no network</strong>, so identical input always produces identical output with no token cost.</li>
+<li><strong>selftest()</strong> — built-in engine self-check. 100% local with no API key.</li>
+      </ul>
+    </section>
+
+    <section id="install">
+      <h2>Install and connect</h2>
+      <p>Published to the official MCP Registry as <code>io.github.diyaluo/excel-toolkit-mcp</code> and as an OCI image on GHCR. Run locally over stdio:</p>
+      <pre><code>pip install -e .
+excel_toolkit_mcp</code></pre>
+      <p>Client configuration (Claude Desktop / Cursor / any MCP client):</p>
+      <pre><code>{
+  "mcpServers": {
+    "excel-toolkit": {
+      "command": "excel_toolkit_mcp",
+      "env": {}
+    }
+  }
+}</code></pre>
+      <p class="meta">No API key, no LLM and no network. The formula engine is a local deterministic template, so there are no per-call token fees and no data leaves the machine.</p>
+    </section>
+
+    <section class="faq">
+      <h2>Frequently asked questions</h2>
+<details open><summary>What does this MCP server do?</summary><p>It gives an MCP-compatible AI agent two deterministic spreadsheet tools: generate_formula converts a plain-language request into a paste-ready Excel/Google Sheets formula, and clean_table transforms a CSV/XLSX file according to a JSON specification.</p></details>
+<details><summary>Does it call an LLM to write formulas?</summary><p>No. Formula generation uses a local deterministic template engine covering 30+ intents. If an intent is not supported it returns formula:null instead of hallucinating, and there is no token cost or network dependency.</p></details>
+<details><summary>What cleaning operations are supported?</summary><p>The clean_table spec supports header normalization, dropping empty columns and duplicates, whitespace stripping, number and date column coercion, splitting and selecting columns, fillna, filtering and subset deduplication.</p></details>
+<details><summary>Does it upload my files?</summary><p>No. The server runs locally over stdio with no network access, so confidential spreadsheets remain on the machine.</p></details>
+<details><summary>Which MCP clients are supported?</summary><p>Any Model Context Protocol client over stdio, including Claude Desktop and Cursor. It is published to the official MCP Registry as io.github.diyaluo/excel-toolkit-mcp and on GHCR.</p></details>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>excel-toolkit-mcp &middot; MIT License &middot; <a href="https://github.com/diyaluo/excel-toolkit-mcp">GitHub repository</a> &middot; <a href="https://github.com/diyaluo/excel-toolkit-mcp/blob/master/LICENSE">license</a></p>
+      <p>Part of the diyaluo local-first developer tools collection. Distributed through the official MCP Registry and GHCR.</p>
+    </div>
+  </footer>
+</body>
+</html>
